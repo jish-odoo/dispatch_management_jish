@@ -1,3 +1,3 @@
 {
-    'name' : 'estate',
+    'name' : 'Real Estate',
 }
