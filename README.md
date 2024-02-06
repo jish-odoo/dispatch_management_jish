@@ -1,0 +1,1 @@
+# odoo-training-2024
