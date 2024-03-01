@@ -14,6 +14,9 @@
                 <xpath expr="//field[@name='order_line']//tree//field[@name='tax_id']" position="after">
                     <field name="commission" column_invisible="parent.is_commission==False"/>
                 </xpath>
+                <xpath expr="//field[@name='tax_totals']" position="before">
+                    <field name="total_commission" widget="monetary" invisible="is_commission==False"/>
+                </xpath> 
             </field>
         </record>
 
