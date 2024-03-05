@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_volume_tree" model="ir.ui.view">
+        <field name="name">view.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="shipped_volume" string="Volume"/>
+                <field name="shipped_weight" string="Weight"/>
+            </tree> 
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="stock_picking_batch.stock_picking_batch_action" model="ir.actions.act_window">
+            <field name="view_mode">tree,form,kanban,graph,gantt</field>
+        </record>
+
+        <record id="stock_picking_batch_graph" model="ir.ui.view">
+            <field name="name">stock.picking.batch.graph</field>
+            <field name="model">stock.picking.batch</field>
+            <field name="arch" type="xml">
+                <graph string="Picking batch volume and weight" type="bar">
+                    <field name="scheduled_date" interval="day"/>
+                    <field name="category_id" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="stock_picking_batch_gantt" model="ir.ui.view">
+            <field name="name">stock.picking.batch.gantt</field>
+            <field name="model">stock.picking.batch</field>
+            <field name="arch" type="xml">
+                <gantt
+                    date_start="date_start"
+                    date_stop="date_deadline"
+                    default_group_by='vehicle_id,dock_id'
+                    string="Schedule"
+                    default_scale="week"
+                    color="vehicle_id"
+                    thumbnails="{'vehicle_id': 'image_128'}"
+                    decoration-info="state == 'draft'"
+                    decoration-success="state == 'done'"
+                >
+                    <field name="state"/>
+                    <templates>
+                        <div t-name="gantt-popover" class="container-fluid">
+                            <div class="row g-0">
+                                <div class="col">
+                                    <ul class="ps-1 mb-0 list-unstyled">
+                                        <t t-if="driver_id" >
+                                            <div t-esc="driver_image"
+                                                options="{'widget': 'image'}">
+                                            </div>
+                                        </t>
+                                        <li><strong><t t-esc="name"/></strong> <t t-esc="weight"/> Kg <t t-esc="volume"/> m^3</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </templates>
+                </gantt>
+            </field>
+        </record>
+
+
+        <record id="stock_picking_batch_form" model="ir.ui.view">
+            <field name="name">stock.picking.batch.form</field>
+            <field name="model">stock.picking.batch</field>
+            <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group//field[@name='scheduled_date']" position="after">
+                    <field name="dock_id" placeholder="Dock A"/>
+                    <field name="vehicle_id" placeholder="Third Party Provider"/>
+                    <field name="category_id" placeholder="e.g. Semi-truck"/>
+                    <field name="weight" widget="progressbar" invisible="not category_id" string="Weight"/>
+                    <field name="volume" widget="progressbar" invisible="not category_id" string="Volume"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
