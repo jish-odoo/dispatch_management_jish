@@ -4,6 +4,7 @@
     <data>
         <record id="stock_picking_batch.stock_picking_batch_action" model="ir.actions.act_window">
             <field name="view_mode">tree,form,kanban,graph,gantt</field>
+            <field name="context">{'gantt_view': True}</field>
         </record>
 
         <record id="stock_picking_batch_graph" model="ir.ui.view">
@@ -36,7 +37,15 @@
                     <field name="name"/>
                     <field name="weight"/>
                     <field name="volume"/>
+                    <field name="display_name_gantt"/>
                     <templates>
+                        <div t-name="gantt-row">
+                            <div class="o_gantt_row_content">
+                                <div class="o_gantt_row_content_name">
+                                    <t t-esc="record.display_name_gantt"/>
+                                </div>
+                            </div>
+                        </div>
                         <div t-name="gantt-popover" class="container-fluid">
                             <div class="row g-0">
                                 <div class="col">
